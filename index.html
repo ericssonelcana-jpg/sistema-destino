@@ -18,6 +18,8 @@
     <script type="text/babel">
         function App() {
             const [isAdmin, setIsAdmin] = React.useState(window.location.hash === '#gestao');
+            const [niche, setNiche] = React.useState('Moda e Vestuário');
+            const [generatedCopy, setGeneratedCopy] = React.useState('Clique em gerar para criar uma copy de alta conversão adaptada ao mercado angolano.');
 
             React.useEffect(() => {
                 const handleHashChange = () => {
@@ -27,15 +29,25 @@
                 return () => window.removeEventListener('hashchange', handleHashChange);
             }, []);
 
-            // ÁREA RESTRITA: Apenas para Gestores da DESTINO (Acede via sistema-destino.vercel.app/#gestao)
+            const handleGenerateAI = () => {
+                if (niche === 'Moda e Vestuário') {
+                    setGeneratedCopy('🔥 Chegou novidade exclusiva a Luanda! Peças limitadas para arrasar neste fim de semana. Qualidade topo com o selo Toque de Algodão / Destino. Encomende já via WhatsApp e receba rápido em casa! 🇦🇴✨ #ModaLuanda #Destino');
+                } else if (niche === 'Estações de Serviço & Auto') {
+                    setGeneratedCopy('🚗 O seu carro merece o melhor cuidado nas estradas de Angola. Revisão completa, combustível de confiança e atendimento de primeira na nossa estação parceira. Passe por cá hoje mesmo! ⛽🛠️ #AngolaCarros');
+                } else {
+                    setGeneratedCopy('🚀 Transforme o seu negócio digital com estratégias validadas em Angola. Menos custos, mais vendas reais no Pix/Multicaixa. Fale com a Agência DESTINO agora! 💼📈');
+                }
+            };
+
+            // ÁREA RESTRITA (Equipa DESTINO)
             if (isAdmin) {
                 return (
                     <div className="p-6 max-w-6xl mx-auto min-h-screen flex flex-col justify-between">
                         <div>
                             <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
                                 <div>
-                                    <span className="text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-full font-semibold">Área Restrita • Equipa DESTINO</span>
-                                    <h1 className="text-2xl font-bold text-white mt-2">Painel de Controlo Interno</h1>
+                                    <span className="text-xs bg-red-500/25 text-red-400 border border-red-500/30 px-3 py-1 rounded-full font-semibold">Área Restrita • Equipa DESTINO</span>
+                                    <h1 className="text-2xl font-bold text-white mt-2">Painel de Controlo Operacional</h1>
                                 </div>
                                 <a 
                                     href="#"
@@ -45,29 +57,31 @@
                                     Sair para o Site Público
                                 </a>
                             </div>
-                            <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-6">
-                                <div className="flex gap-3 flex-wrap">
-                                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold cursor-pointer">Todos os Leads</span>
-                                    <span className="bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer border border-slate-700">Novos Clientes</span>
-                                    <span className="bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer border border-slate-700">Em Atendimento</span>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                <div className="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                                    <p className="text-slate-400 text-xs">Leads Capturados Hoje</p>
+                                    <p className="text-2xl font-bold text-white mt-1">14</p>
                                 </div>
-                                <div className="bg-slate-950 p-5 rounded-xl border border-slate-800/80 text-slate-300 text-sm space-y-2">
-                                    <p className="font-semibold text-blue-400">Estado Operacional:</p>
-                                    <p>Sistema de gestão de clientes, filtragem e automação de marketing operando sem falhas em Angola.</p>
+                                <div className="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                                    <p className="text-slate-400 text-xs">Clientes Ativos (30.000 Kz)</p>
+                                    <p className="text-2xl font-bold text-emerald-400 mt-1">8</p>
+                                </div>
+                                <div className="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                                    <p className="text-slate-400 text-xs">Estado da Automação IA</p>
+                                    <p className="text-2xl font-bold text-blue-400 mt-1">Operacional 🟢</p>
                                 </div>
                             </div>
                         </div>
                         <footer className="text-center text-slate-600 text-xs py-4">
-                            Agência DESTINO — Acesso restrito autorizado apenas a administradores.
+                            Agência DESTINO — Sistema de Gestão Interna.
                         </footer>
                     </div>
                 );
             }
 
-            // PÁGINA PÚBLICA: O que os clientes externos veem ao entrar no link principal
+            // PÁGINA PÚBLICA (Com soluções reais interativas para os clientes)
             return (
                 <div className="min-h-screen flex flex-col justify-between">
-                    {/* Header Institucional Limpo */}
                     <header className="p-6 max-w-6xl mx-auto w-full flex justify-between items-center">
                         <div className="flex items-center gap-2">
                             <h1 className="text-xl font-extrabold tracking-wider text-blue-500">DESTINO</h1>
@@ -75,71 +89,83 @@
                         </div>
                         <div>
                             <a 
-                                href="https://wa.me/" 
+                                href="https://wa.me/244900000000?text=Olá,%20quero%20aderir%20aos%20serviços%20da%20Agência%20DESTINO." 
                                 target="_blank" 
-                                className="text-xs bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl transition shadow-lg shadow-blue-600/20"
+                                className="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-lg shadow-emerald-600/20"
                             >
-                                Falar no WhatsApp
+                                Falar no WhatsApp 💬
                             </a>
                         </div>
                     </header>
 
-                    {/* Hero Principal */}
-                    <main className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <main className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div className="space-y-6">
-                            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
                                 Chega de rasgar dinheiro com <span className="text-orange-500">marketing que não vende.</span>
                             </h2>
-                            <p className="text-slate-300 text-base md:text-lg leading-relaxed">
-                                A equipa da DESTINO desenvolveu a solução definitiva para o mercado angolano: por apenas <strong className="text-white">30.000 Kz/mês</strong>, tens uma Inteligência Artificial completa que cria artes fiéis à tua marca, gera textos de vendas adaptados ao público local, otimiza Anúncios Patrocinados e faz a gestão de conteúdo e conversão 24/7.
+                            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+                                A solução definitiva para empresas em Angola: por apenas <strong className="text-white">30.000 Kz/mês</strong>, tens uma Inteligência Artificial integrada que gera copies de vendas locais, cria estratégias de conteúdo e automatiza o teu atendimento.
                             </p>
                             
-                            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                            <div className="flex flex-col sm:flex-row gap-3 pt-2">
                                 <a 
-                                    href="https://wa.me/" 
+                                    href="https://wa.me/244900000000?text=Quero%20assinar%20o%20plano%20de%2030.000%20Kz%20da%20DESTINO" 
                                     target="_blank" 
-                                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-emerald-600/20 text-center transition"
+                                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-emerald-600/20 text-center transition text-sm"
                                 >
-                                    Experimentar com Apenas 30.000 Kz
+                                    Subcrever por 30.000 Kz 🚀
                                 </a>
                                 <a 
-                                    href="https://wa.me/" 
+                                    href="https://wa.me/244900000000?text=Quero%20saber%20mais%20sobre%20os%20cursos%20e%20mentorias%20da%20DESTINO" 
                                     target="_blank" 
-                                    className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-3.5 px-6 rounded-xl text-center transition"
+                                    className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-3 px-6 rounded-xl text-center transition text-sm"
                                 >
                                     Ver Cursos e Mentorias 📚
                                 </a>
                             </div>
 
-                            <p className="text-xs text-slate-400 flex items-center gap-2 pt-2">
+                            <p className="text-xs text-slate-400 flex items-center gap-2">
                                 🛡️ Garantia incondicional DESTINO de 7 dias ou o teu dinheiro de volta.
                             </p>
                         </div>
 
-                        {/* Bloco de Demonstração Comercial */}
+                        {/* Ferramenta Interativa Real para Clientes e Gestores testarem na hora */}
                         <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl space-y-4">
                             <div className="flex justify-between items-center text-xs text-slate-400 border-b border-slate-800 pb-3">
-                                <span>Plataforma DESTINO — IA Ativa</span>
-                                <span className="text-emerald-400">● Online em Luanda</span>
+                                <span>Gerador de Conteúdo IA — DESTINO Angola</span>
+                                <span className="text-emerald-400">● Ativo</span>
                             </div>
+                            
+                            <div className="space-y-2">
+                                <label className="text-xs text-slate-300 font-medium">Selecione o seu Nicho / Negócio:</label>
+                                <select 
+                                    value={niche} 
+                                    onChange={(e) => setNiche(e.target.value)}
+                                    className="w-auto bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl p-2.5 outline-none focus:border-blue-500"
+                                >
+                                    <option value="Moda e Vestuário">Moda, Roupas e Perucas</option>
+                                    <option value="Estações de Serviço & Auto">Estações de Serviço e Centros Comerciais</option>
+                                    <option value="Empreendedorismo Digital">Marketing e Cursos Digitais</option>
+                                </select>
+                            </div>
+
                             <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-                                <p className="text-sm font-bold text-white">Criação de Conteúdo & Branding</p>
-                                <p className="text-xs text-slate-400">Artes adaptadas ao seu Brand Kit com precisão.</p>
+                                <p className="text-xs text-slate-400 font-semibold">Copy Gerada para Redes Sociais:</p>
+                                <p className="text-xs text-slate-200 leading-relaxed bg-slate-900/60 p-3 rounded-lg border border-slate-800/80">
+                                    {generatedCopy}
+                                </p>
                             </div>
-                            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1 text-xs">
-                                <p className="text-slate-400 font-semibold">Desempenho de Anúncios</p>
-                                <p className="text-emerald-400 font-bold">CTR 4.8% &nbsp;&nbsp; CPA 320 Kz &nbsp;&nbsp; ROAS 3.6x</p>
-                            </div>
-                            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs space-y-1">
-                                <p className="text-slate-400">💬 Gestão de Leads & WhatsApp</p>
-                                <p className="text-slate-300 italic">"Como funcionam os pacotes para empresas?"</p>
-                                <p className="text-emerald-400 font-semibold pt-1">Resposta automática configurada ✓</p>
-                            </div>
+
+                            <button 
+                                onClick={handleGenerateAI}
+                                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2.5 px-4 rounded-xl text-xs transition shadow-md cursor-pointer"
+                            >
+                                ✨ Gerar Nova Sugestão com IA
+                            </button>
                         </div>
                     </main>
 
-                    {/* Rodapé Institucional */}
-                    <footer className="p-6 border-t border-slate-900 text-center text-slate-500 text-sm">
+                    <footer className="p-6 border-t border-slate-900 text-center text-slate-500 text-xs">
                         <p>&copy; 2026 Agência DESTINO. Todos os direitos reservados.</p>
                     </footer>
                 </div>
