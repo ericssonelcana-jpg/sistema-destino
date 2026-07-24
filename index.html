@@ -11,18 +11,53 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-900 text-white min-h-screen">
 
     <div id="root"></div>
 
     <script type="text/babel">
         function App() {
+            const [showDashboard, setShowDashboard] = React.useState(false);
+
+            if (showDashboard) {
+                return (
+                    <div className="p-6">
+                        <div className="flex justify-between items-center mb-6">
+                            <h1 className="text-2xl font-bold text-blue-400">Painel DESTINO - Gestão de Clientes</h1>
+                            <button 
+                                onClick={() => setShowDashboard(false)}
+                                className="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg text-sm transition cursor-pointer"
+                            >
+                                Voltar ao Início
+                            </button>
+                        </div>
+                        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
+                            <p className="text-slate-300 mb-4">Painel carregado com sucesso! Aqui tens a interface do teu sistema pronta a usar.</p>
+                            <div className="flex gap-4 flex-wrap mb-6">
+                                <span className="bg-blue-600/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold">Todos</span>
+                                <span className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer">Lead</span>
+                                <span className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer">Contactado</span>
+                                <span className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer">Buyer</span>
+                            </div>
+                            <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-800 text-slate-400 text-sm">
+                                Sistema de gestão e filtragem operando perfeitamente.
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
             return (
-                <div class="text-center bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-700 max-w-md w-full">
-                    <h1 class="text-3xl font-bold text-blue-400 mb-2">Sistema DESTINO</h1>
-                    <p class="text-slate-300 mb-6">A tua plataforma está online e pronta!</p>
-                    <div class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer transition">
-                        Aceder ao Painel
+                <div className="min-h-screen flex items-center justify-center p-4">
+                    <div className="text-center bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-700 max-w-md w-full">
+                        <h1 className="text-3xl font-bold text-blue-400 mb-2">Sistema DESTINO</h1>
+                        <p className="text-slate-300 mb-6">A tua plataforma está online e pronta!</p>
+                        <button 
+                            onClick={() => setShowDashboard(true)}
+                            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg cursor-pointer transition shadow-lg"
+                        >
+                            Aceder ao Painel
+                        </button>
                     </div>
                 </div>
             );
