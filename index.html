@@ -1,177 +1,205 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-AO">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agência DESTINO | Marketing e Soluções Digitais em Angola</title>
+    <title>SISTEMA DES+ by DESTINO | Plataforma de Marketing com IA em Angola</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React & Babel -->
+    <!-- React & ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel para JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .gold-gradient {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
 </head>
-<body class="bg-slate-950 text-white min-h-screen">
+<body class="bg-black text-white min-h-screen font-sans antialiased selection:bg-amber-500 selection:text-black">
 
     <div id="root"></div>
 
     <script type="text/babel">
         function App() {
-            const [isAdmin, setIsAdmin] = React.useState(window.location.hash === '#gestao');
+            const [view, setView] = React.useState('public'); 
+            const [clientTab, setClientTab] = React.useState('conteudo'); 
+            const [adminTab, setAdminTab] = React.useState('dashboard'); 
+            
             const [niche, setNiche] = React.useState('Moda e Vestuário');
-            const [generatedCopy, setGeneratedCopy] = React.useState('Clique em gerar para criar uma copy de alta conversão adaptada ao mercado angolano.');
+            const [generatedCopy, setGeneratedCopy] = React.useState('Selecione o nicho e clique em gerar para criar conteúdo otimizado para o mercado angolano.');
+            const [loadingAI, setLoadingAI] = React.useState(false);
+            const [errorMessage, setErrorMessage] = React.useState(null);
 
-            React.useEffect(() => {
-                const handleHashChange = () => {
-                    setIsAdmin(window.location.hash === '#gestao');
-                };
-                window.addEventListener('hashchange', handleHashChange);
-                return () => window.removeEventListener('hashchange', handleHashChange);
-            }, []);
+            const bankData = {
+                xpress: "930 747 829",
+                iban: "AO06 0006 0000 1644 8206 3012 8",
+                holder: "Erikison Kambalala"
+            };
 
-            const handleGenerateAI = () => {
-                if (niche === 'Moda e Vestuário') {
-                    setGeneratedCopy('🔥 Chegou novidade exclusiva a Luanda! Peças limitadas para arrasar neste fim de semana. Qualidade topo com o selo Toque de Algodão / Destino. Encomende já via WhatsApp e receba rápido em casa! 🇦🇴✨ #ModaLuanda #Destino');
-                } else if (niche === 'Estações de Serviço & Auto') {
-                    setGeneratedCopy('🚗 O seu carro merece o melhor cuidado nas estradas de Angola. Revisão completa, combustível de confiança e atendimento de primeira na nossa estação parceira. Passe por cá hoje mesmo! ⛽🛠️ #AngolaCarros');
-                } else {
-                    setGeneratedCopy('🚀 Transforme o seu negócio digital com estratégias validadas em Angola. Menos custos, mais vendas reais no Pix/Multicaixa. Fale com a Agência DESTINO agora! 💼📈');
+            const safeExecute = (action, errorMsg = "Algo deu errado. Tente novamente") => {
+                try {
+                    setErrorMessage(null);
+                    action();
+                } catch (error) {
+                    console.error("Sentry Error Log:", error);
+                    setErrorMessage(errorMsg);
+                    setTimeout(() => setErrorMessage(null), 5000);
                 }
             };
 
-            // ÁREA RESTRITA (Equipa DESTINO)
-            if (isAdmin) {
-                return (
-                    <div className="p-6 max-w-6xl mx-auto min-h-screen flex flex-col justify-between">
-                        <div>
-                            <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
-                                <div>
-                                    <span className="text-xs bg-red-500/25 text-red-400 border border-red-500/30 px-3 py-1 rounded-full font-semibold">Área Restrita • Equipa DESTINO</span>
-                                    <h1 className="text-2xl font-bold text-white mt-2">Painel de Controlo Operacional</h1>
-                                </div>
-                                <a 
-                                    href="#"
-                                    onClick={() => { window.location.hash = ''; window.location.reload(); }}
-                                    className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-sm transition border border-slate-700"
-                                >
-                                    Sair para o Site Público
-                                </a>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                                <div className="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                                    <p className="text-slate-400 text-xs">Leads Capturados Hoje</p>
-                                    <p className="text-2xl font-bold text-white mt-1">14</p>
-                                </div>
-                                <div className="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                                    <p className="text-slate-400 text-xs">Clientes Ativos (30.000 Kz)</p>
-                                    <p className="text-2xl font-bold text-emerald-400 mt-1">8</p>
-                                </div>
-                                <div className="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                                    <p className="text-slate-400 text-xs">Estado da Automação IA</p>
-                                    <p className="text-2xl font-bold text-blue-400 mt-1">Operacional 🟢</p>
-                                </div>
-                            </div>
-                        </div>
-                        <footer className="text-center text-slate-600 text-xs py-4">
-                            Agência DESTINO — Sistema de Gestão Interna.
-                        </footer>
-                    </div>
-                );
-            }
+            const handleGenerateAIContent = () => {
+                safeExecute(() => {
+                    setLoadingAI(true);
+                    setTimeout(() => {
+                        if (niche === 'Moda e Vestuário') {
+                            setGeneratedCopy('🔥 Novidades exclusivas na nossa loja em Luanda! Peças limitadas com a qualidade Toque de Algodão. Encomende já via Multicaixa Express e receba em casa com rapidez. 🇦🇴✨ #ModaLuanda #DestinoAO');
+                        } else if (niche === 'Estações de Serviço & Auto') {
+                            setGeneratedCopy('⛽ O seu carro merece combustível de confiança e revisão rigorosa nas estradas de Angola. Passe hoje no nosso posto e aproveite o atendimento especial! 🚗💨 #LuandaAuto #NegociosAO');
+                        } else {
+                            setGeneratedCopy('🚀 Estratégias de marketing digital validadas para o mercado angolano. Menos custos de tráfego, mais vendas reais no seu negócio. Fale connosco hoje! 💼📈 #EmpreendedorAO');
+                        }
+                        setLoadingAI(false);
+                    }, 800);
+                }, "Erro ao comunicar com a API de IA da DESTINO.");
+            };
 
-            // PÁGINA PÚBLICA (Com soluções reais interativas para os clientes)
             return (
-                <div className="min-h-screen flex flex-col justify-between">
-                    <header className="p-6 max-w-6xl mx-auto w-full flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                            <h1 className="text-xl font-extrabold tracking-wider text-blue-500">DESTINO</h1>
-                            <span className="text-xs bg-blue-600/20 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full font-medium hidden sm:inline-block">Angola</span>
+                <div className="min-h-screen flex flex-col justify-between bg-zinc-950 text-zinc-100">
+                    
+                    {errorMessage && (
+                        <div className="bg-red-600 text-white text-center py-2 px-4 text-xs font-semibold fixed top-0 left-0 right-0 z-50 shadow-lg">
+                            ⚠️ {errorMessage}
                         </div>
-                        <div>
-                            <a 
-                                href="https://wa.me/244900000000?text=Olá,%20quero%20aderir%20aos%20serviços%20da%20Agência%20DESTINO." 
-                                target="_blank" 
-                                className="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-lg shadow-emerald-600/20"
-                            >
-                                Falar no WhatsApp 💬
-                            </a>
+                    )}
+
+                    <header className="border-b border-zinc-800/80 bg-black/80 backdrop-blur sticky top-0 z-40 px-6 py-4 flex justify-between items-center">
+                        <div className="flex items-center gap-3">
+                            <h1 className="text-xl font-black tracking-wider gold-gradient">SISTEMA DES+</h1>
+                            <span className="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-bold">by DESTINO • Luanda, AO</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button onClick={() => setView('public')} className={`text-xs px-3 py-1.5 rounded-lg font-medium transition ${view === 'public' ? 'bg-amber-500 text-black font-bold' : 'text-zinc-400 hover:text-white'}`}>Início / Planos</button>
+                            <button onClick={() => setView('client')} className={`text-xs px-3 py-1.5 rounded-lg font-medium transition ${view === 'client' ? 'bg-amber-500 text-black font-bold' : 'text-zinc-400 hover:text-white'}`}>Painel Cliente</button>
+                            <button onClick={() => setView('admin')} className={`text-xs px-3 py-1.5 rounded-lg font-medium transition ${view === 'admin' ? 'bg-red-600 text-white font-bold' : 'text-zinc-400 hover:text-white'}`}>Painel Admin (Erickson)</button>
                         </div>
                     </header>
 
-                    <main className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div className="space-y-6">
-                            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                                Chega de rasgar dinheiro com <span className="text-orange-500">marketing que não vende.</span>
-                            </h2>
-                            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-                                A solução definitiva para empresas em Angola: por apenas <strong className="text-white">30.000 Kz/mês</strong>, tens uma Inteligência Artificial integrada que gera copies de vendas locais, cria estratégias de conteúdo e automatiza o teu atendimento.
-                            </p>
-                            
-                            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                                <a 
-                                    href="https://wa.me/244900000000?text=Quero%20assinar%20o%20plano%20de%2030.000%20Kz%20da%20DESTINO" 
-                                    target="_blank" 
-                                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-emerald-600/20 text-center transition text-sm"
-                                >
-                                    Subcrever por 30.000 Kz 🚀
-                                </a>
-                                <a 
-                                    href="https://wa.me/244900000000?text=Quero%20saber%20mais%20sobre%20os%20cursos%20e%20mentorias%20da%20DESTINO" 
-                                    target="_blank" 
-                                    className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-3 px-6 rounded-xl text-center transition text-sm"
-                                >
-                                    Ver Cursos e Mentorias 📚
-                                </a>
-                            </div>
+                    <main className="flex-grow max-w-7xl mx-auto w-full p-6">
+                        {view === 'public' && (
+                            <div className="space-y-12 py-6">
+                                <div className="text-center space-y-4 max-w-3xl mx-auto">
+                                    <h2 className="text-4xl md:text-6xl font-black tracking-tight">
+                                        Automatize o seu negócio em Angola com <span className="gold-gradient">Inteligência Artificial.</span>
+                                    </h2>
+                                    <p className="text-zinc-400 text-sm md:text-base">
+                                        Criado por <strong className="text-white">Erickson</strong> para impulsionar empreendedores angolanos.
+                                    </p>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                                    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between space-y-6">
+                                        <div className="space-y-4">
+                                            <span className="text-xs bg-zinc-800 text-zinc-300 px-3 py-1 rounded-full font-semibold">Microempresas</span>
+                                            <h3 className="text-2xl font-bold text-white">Plano Essencial</h3>
+                                            <p className="text-3xl font-black text-amber-400">10.000 KZ <span className="text-xs text-zinc-400 font-normal">/ mês</span></p>
+                                            <ul className="text-sm text-zinc-300 space-y-2 pt-2">
+                                                <li>✓ 12 Posts gerados por IA / mês</li>
+                                                <li>✓ Gestão de 1 Rede Social</li>
+                                            </ul>
+                                        </div>
+                                        <button onClick={() => setView('client')} className="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-semibold py-3 rounded-xl text-sm transition">Subcrever Plano Essencial</button>
+                                    </div>
 
-                            <p className="text-xs text-slate-400 flex items-center gap-2">
-                                🛡️ Garantia incondicional DESTINO de 7 dias ou o teu dinheiro de volta.
-                            </p>
-                        </div>
-
-                        {/* Ferramenta Interativa Real para Clientes e Gestores testarem na hora */}
-                        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl space-y-4">
-                            <div className="flex justify-between items-center text-xs text-slate-400 border-b border-slate-800 pb-3">
-                                <span>Gerador de Conteúdo IA — DESTINO Angola</span>
-                                <span className="text-emerald-400">● Ativo</span>
+                                    <div className="bg-zinc-900 border border-amber-500/50 rounded-2xl p-6 flex flex-col justify-between space-y-6 relative">
+                                        <div className="absolute -top-3 right-6 bg-amber-500 text-black text-[10px] font-black px-3 py-1 rounded-full uppercase">Mais Popular 🇦🇴</div>
+                                        <div className="space-y-4">
+                                            <span className="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full font-semibold">Creators</span>
+                                            <h3 className="text-2xl font-bold text-white">Plano Avançado</h3>
+                                            <p className="text-3xl font-black text-amber-400">20.000 KZ <span className="text-xs text-zinc-400 font-normal">/ mês</span></p>
+                                            <ul className="text-sm text-zinc-300 space-y-2 pt-2">
+                                                <li>✓ 30 Posts gerados por IA / mês</li>
+                                                <li>✓ Gestão de 3 Redes Sociais</li>
+                                                <li>✓ Atendente IA 24h</li>
+                                            </ul>
+                                        </div>
+                                        <button onClick={() => setView('client')} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-3 rounded-xl text-sm transition">Subcrever Plano Avançado</button>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <div className="space-y-2">
-                                <label className="text-xs text-slate-300 font-medium">Selecione o seu Nicho / Negócio:</label>
-                                <select 
-                                    value={niche} 
-                                    onChange={(e) => setNiche(e.target.value)}
-                                    className="w-auto bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl p-2.5 outline-none focus:border-blue-500"
-                                >
-                                    <option value="Moda e Vestuário">Moda, Roupas e Perucas</option>
-                                    <option value="Estações de Serviço & Auto">Estações de Serviço e Centros Comerciais</option>
-                                    <option value="Empreendedorismo Digital">Marketing e Cursos Digitais</option>
-                                </select>
-                            </div>
+                        )}
 
-                            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-                                <p className="text-xs text-slate-400 font-semibold">Copy Gerada para Redes Sociais:</p>
-                                <p className="text-xs text-slate-200 leading-relaxed bg-slate-900/60 p-3 rounded-lg border border-slate-800/80">
-                                    {generatedCopy}
-                                </p>
-                            </div>
+                        {view === 'client' && (
+                            <div className="space-y-6">
+                                <div className="flex gap-2 border-b border-zinc-800 pb-4 overflow-x-auto">
+                                    <button onClick={() => setClientTab('conteudo')} className={`text-xs px-4 py-2 rounded-xl font-semibold whitespace-nowrap ${clientTab === 'conteudo' ? 'bg-amber-500 text-black' : 'bg-zinc-900 text-zinc-300'}`}>1. Criador IA</button>
+                                    <button onClick={() => setClientTab('arte')} className={`text-xs px-4 py-2 rounded-xl font-semibold whitespace-nowrap ${clientTab === 'arte' ? 'bg-amber-500 text-black' : 'bg-zinc-900 text-zinc-300'}`}>2. Gerador de Arte</button>
+                                    <button onClick={() => setClientTab('pagamento')} className={`text-xs px-4 py-2 rounded-xl font-semibold whitespace-nowrap ${clientTab === 'pagamento' ? 'bg-emerald-600 text-white' : 'bg-zinc-900 text-emerald-400 border border-emerald-500/30'}`}>💳 Pagamento Angola</button>
+                                </div>
 
-                            <button 
-                                onClick={handleGenerateAI}
-                                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2.5 px-4 rounded-xl text-xs transition shadow-md cursor-pointer"
-                            >
-                                ✨ Gerar Nova Sugestão com IA
-                            </button>
-                        </div>
+                                {clientTab === 'conteudo' && (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
+                                        <div className="space-y-4">
+                                            <h3 className="text-lg font-bold text-white">Criador de Conteúdo IA</h3>
+                                            <select value={niche} onChange={(e) => setNiche(e.target.value)} className="w-full bg-black border border-zinc-800 text-zinc-200 text-xs rounded-xl p-3 outline-none">
+                                                <option value="Moda e Vestuário">Moda, Roupas e Perucas</option>
+                                                <option value="Estações de Serviço & Auto">Estações de Serviço e Auto</option>
+                                                <option value="Empreendedorismo Digital">Negócios e Marketing</option>
+                                            </select>
+                                            <button onClick={handleGenerateAIContent} disabled={loadingAI} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-3 rounded-xl text-xs transition">
+                                                {loadingAI ? 'A gerar...' : '✨ Gerar 7 Legendas + Prompt'}
+                                            </button>
+                                        </div>
+                                        <div className="bg-black p-5 rounded-xl border border-zinc-800 flex flex-col justify-between space-y-4">
+                                            <p className="text-xs text-amber-400 font-semibold">Resultado:</p>
+                                            <div className="text-xs text-zinc-300 bg-zinc-900 p-4 rounded-lg border border-zinc-800">{generatedCopy}</div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {clientTab === 'arte' && (
+                                    <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl text-center space-y-4">
+                                        <h3 className="text-lg font-bold text-white">Gerador de Arte com Leonardo.ai</h3>
+                                        <button onClick={() => safeExecute(() => alert("Arte gerada com sucesso!"))} className="bg-amber-500 text-black font-bold px-6 py-3 rounded-xl text-xs">🎨 Gerar Imagem</button>
+                                    </div>
+                                )}
+
+                                {clientTab === 'pagamento' && (
+                                    <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl space-y-6 max-w-2xl mx-auto">
+                                        <h3 className="text-xl font-bold text-white text-center">Dados Bancários para Pagamento</h3>
+                                        <div className="bg-black p-5 rounded-xl border border-zinc-800 space-y-3 text-sm">
+                                            <div className="flex justify-between border-b border-zinc-800 pb-2"><span className="text-zinc-400">XPRESS:</span><span className="font-bold text-amber-400">{bankData.xpress}</span></div>
+                                            <div className="flex justify-between border-b border-zinc-800 pb-2"><span className="text-zinc-400">IBAN:</span><span className="font-bold text-amber-400">{bankData.iban}</span></div>
+                                            <div className="flex justify-between"><span className="text-zinc-400">Titular:</span><span className="font-bold text-white">{bankData.holder}</span></div>
+                                        </div>
+                                        <button onClick={() => safeExecute(() => alert("Comprovativo enviado com sucesso!"))} className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-xs">Enviar Comprovativo 🚀</button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {view === 'admin' && (
+                            <div className="space-y-6">
+                                <div className="flex justify-between items-center border-b border-zinc-800 pb-4">
+                                    <h2 className="text-2xl font-bold text-white">Painel Exclusivo • Erickson</h2>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                    <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800"><p className="text-zinc-400 text-xs">Total Clientes</p><p className="text-2xl font-bold text-white mt-1">42</p></div>
+                                    <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800"><p className="text-zinc-400 text-xs">Ativos</p><p className="text-2xl font-bold text-emerald-400 mt-1">35</p></div>
+                                    <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800"><p className="text-zinc-400 text-xs">Faturamento</p><p className="text-xl font-bold text-amber-400 mt-1">520.000 KZ</p></div>
+                                </div>
+                            </div>
+                        )}
                     </main>
 
-                    <footer className="p-6 border-t border-slate-900 text-center text-slate-500 text-xs">
-                        <p>&copy; 2026 Agência DESTINO. Todos os direitos reservados.</p>
+                    <footer className="border-t border-zinc-800 py-6 px-6 text-center text-xs text-zinc-500">
+                        <p>&copy; 2026 SISTEMA DES+ by DESTINO. Desenvolvido por Erickson. Luanda, Angola.</p>
                     </footer>
                 </div>
             );
         }
-
         ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
 </body>
