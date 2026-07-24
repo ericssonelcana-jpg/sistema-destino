@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema DESTINO</title>
+    <title>Agência DESTINO | Marketing e Soluções Digitais</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & Babel -->
@@ -11,36 +11,39 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="bg-slate-900 text-white min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen">
 
     <div id="root"></div>
 
     <script type="text/babel">
         function App() {
-            const [showDashboard, setShowDashboard] = React.useState(false);
+            const [view, setView] = React.useState('landing'); // 'landing' ou 'dashboard'
 
-            if (showDashboard) {
+            if (view === 'dashboard') {
                 return (
-                    <div className="p-6">
-                        <div className="flex justify-between items-center mb-6">
-                            <h1 className="text-2xl font-bold text-blue-400">Painel DESTINO - Gestão de Clientes</h1>
+                    <div className="p-6 max-w-6xl mx-auto">
+                        <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                            <div>
+                                <h1 className="text-2xl font-bold text-blue-400">Painel DESTINO - Gestão de Clientes</h1>
+                                <p className="text-slate-400 text-sm">Sistema operacional e filtragem de leads.</p>
+                            </div>
                             <button 
-                                onClick={() => setShowDashboard(false)}
-                                className="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg text-sm transition cursor-pointer"
+                                onClick={() => setView('landing')}
+                                className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-sm transition border border-slate-700 cursor-pointer"
                             >
-                                Voltar ao Início
+                                ← Voltar ao Site
                             </button>
                         </div>
-                        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
-                            <p className="text-slate-300 mb-4">Painel carregado com sucesso! Aqui tens a interface do teu sistema pronta a usar.</p>
-                            <div className="flex gap-4 flex-wrap mb-6">
-                                <span className="bg-blue-600/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold">Todos</span>
-                                <span className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer">Lead</span>
-                                <span className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer">Contactado</span>
-                                <span className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer">Buyer</span>
+                        <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-6">
+                            <div className="flex gap-3 flex-wrap">
+                                <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold cursor-pointer">Todos</span>
+                                <span className="bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer border border-slate-700">Lead</span>
+                                <span className="bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer border border-slate-700">Contactado</span>
+                                <span className="bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer border border-slate-700">Buyer</span>
                             </div>
-                            <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-800 text-slate-400 text-sm">
-                                Sistema de gestão e filtragem operando perfeitamente.
+                            <div className="bg-slate-950 p-5 rounded-xl border border-slate-800/80 text-slate-300 text-sm space-y-2">
+                                <p className="font-semibold text-blue-400">Estado do Sistema:</p>
+                                <p>Sistema de gestão, automação e filtragem operando perfeitamente para o mercado angolano.</p>
                             </div>
                         </div>
                     </div>
@@ -48,17 +51,85 @@
             }
 
             return (
-                <div className="min-h-screen flex items-center justify-center p-4">
-                    <div className="text-center bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-700 max-w-md w-full">
-                        <h1 className="text-3xl font-bold text-blue-400 mb-2">Sistema DESTINO</h1>
-                        <p className="text-slate-300 mb-6">A tua plataforma está online e pronta!</p>
+                <div className="min-h-screen flex flex-col justify-between">
+                    {/* Header */}
+                    <header className="p-6 max-w-6xl mx-auto w-full flex justify-between items-center">
+                        <h1 className="text-xl font-extrabold tracking-wider text-blue-500">DESTINO</h1>
                         <button 
-                            onClick={() => setShowDashboard(true)}
-                            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg cursor-pointer transition shadow-lg"
+                            onClick={() => setView('dashboard')}
+                            className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-4 py-2 rounded-xl font-semibold transition cursor-pointer"
                         >
-                            Aceder ao Painel
+                            Aceder ao App / Painel
                         </button>
-                    </div>
+                    </header>
+
+                    {/* Hero Section */}
+                    <main className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div className="space-y-6">
+                            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                                Chega de rasgar dinheiro com <span className="text-orange-500">marketing que não vende.</span>
+                            </h2>
+                            <p className="text-slate-300 text-base md:text-lg leading-relaxed">
+                                A equipa da DESTINO desenvolveu a solução definitiva para o mercado angolano: por apenas <strong className="text-white">30.000 Kz/mês</strong>, tens uma Inteligência Artificial completa que cria artes fiéis à tua marca, gera textos de vendas adaptados ao público local, otimiza Anúncios Patrocinados e vende no WhatsApp 24/7 sem dores de cabeça.
+                            </p>
+                            
+                            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                                <a 
+                                    href="https://wa.me/" 
+                                    target="_blank" 
+                                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-emerald-600/20 text-center transition"
+                                >
+                                    Experimentar com Apenas 30.000 Kz
+                                </a>
+                                <button 
+                                    onClick={() => setView('dashboard')}
+                                    className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-3.5 px-6 rounded-xl text-center transition cursor-pointer"
+                                >
+                                    Baixar o App 📲
+                                </button>
+                            </div>
+
+                            <div className="pt-2">
+                                <a 
+                                    href="https://wa.me/" 
+                                    target="_blank" 
+                                    className="inline-block bg-orange-600/20 hover:bg-orange-600/30 text-orange-400 border border-orange-500/30 font-semibold py-3 px-6 rounded-xl w-full text-center transition"
+                                >
+                                    Agendar Mentoria / Palestra com a DESTINO
+                                </a>
+                            </div>
+
+                            <p className="text-xs text-slate-400 flex items-center gap-2 pt-2">
+                                🛡️ Garantia incondicional DESTINO de 7 dias ou o teu dinheiro de volta.
+                            </p>
+                        </div>
+
+                        {/* Preview Card / Mockup */}
+                        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl space-y-4">
+                            <div className="flex justify-between items-center text-xs text-slate-400 border-b border-slate-800 pb-3">
+                                <span>brand_kit.painel — ao vivo</span>
+                                <span className="text-emerald-400">● Ativo</span>
+                            </div>
+                            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                                <p className="text-sm font-bold text-white">Arte gerada — Promoção de Sexta</p>
+                                <p className="text-xs text-slate-400">Fiel ao Brand Kit • pronta para publicar</p>
+                            </div>
+                            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1 text-xs">
+                                <p className="text-slate-400 font-semibold">Anúncio • Instagram</p>
+                                <p className="text-emerald-400 font-bold">CTR 4.8% &nbsp;&nbsp; CPA 320 Kz &nbsp;&nbsp; ROAS 3.6x</p>
+                            </div>
+                            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs space-y-1">
+                                <p className="text-slate-400">💬 WhatsApp • resposta automática</p>
+                                <p className="text-slate-300 italic">"Qual é o preço do plano avançado?"</p>
+                                <p className="text-emerald-400 font-semibold pt-1">Enviado em 2 segundos ✓</p>
+                            </div>
+                        </div>
+                    </main>
+
+                    {/* Footer */}
+                    <footer className="p-6 border-t border-slate-900 text-center text-slate-500 text-sm">
+                        &copy; 2026 Agência DESTINO. Todos os direitos reservados.
+                    </footer>
                 </div>
             );
         }
